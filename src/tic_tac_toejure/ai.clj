@@ -18,10 +18,15 @@
       (calculate-points winning-marker own-marker))))
 
 (defn minimax-move [board own-marker opponent-marker]
-  (if (game-over? board (vector own-marker opponent-marker))
-    (score board own-marker opponent-marker)
-    (let [empty-positions (get-all-spaces-for board "")]
-      (into {} (for [position empty-positions
-                    :let [new-board (place-marker board position own-marker)
-                          new-scores (hash-map position (minimax-move new-board opponent-marker own-marker))]]
-                          new-scores)))))
+  (let [scores (map #(score (place-marker board % own-marker) own-marker opponent-marker)
+                                    (get-all-spaces-for board ""))
+        moves (get-all-spaces-for board "")
+        scored-moves (zipmap moves scores)]
+        (first (first (sort-by val > scored-moves)))))
+  ; (if (game-over? board (vector own-marker opponent-marker))
+  ;   (score board own-marker opponent-marker)
+  ;   (let [empty-positions (get-all-spaces-for board "")]
+  ;     (into {} (for [position empty-positions
+  ;                   :let [new-board (place-marker board position own-marker)
+  ;                         new-scores (hash-map position (minimax-move new-board opponent-marker own-marker))]]
+  ;                         new-scores)))))
