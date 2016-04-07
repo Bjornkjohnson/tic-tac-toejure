@@ -12,16 +12,21 @@
   (if (= winning-marker own-marker) 10 -10))
 
 (defn score [board own-marker opponent-marker]
-  (let [winning-marker (get-winner board (vector own-marker opponent-marker))]
-    (if (false? winning-marker)
-      0
-      (calculate-points winning-marker own-marker))))
+  (if (game-over? board (vector own-marker opponent-marker))
+      (let [winning-marker (get-winner board (vector own-marker opponent-marker))]
+        (if (false? winning-marker)
+          0
+          (calculate-points winning-marker own-marker)))
+      (let [values (map #(score (place-marker board % own-marker)opponent-marker own-marker)
+                        (get-all-spaces-for board ""))]
+                        (apply max values))))
 
 (defn minimax-move [board own-marker opponent-marker]
   (let [scores (map #(score (place-marker board % own-marker) own-marker opponent-marker)
                                     (get-all-spaces-for board ""))
         moves (get-all-spaces-for board "")
         scored-moves (zipmap moves scores)]
+        (println scored-moves)
         (first (first (sort-by val > scored-moves)))))
   ; (if (game-over? board (vector own-marker opponent-marker))
   ;   (score board own-marker opponent-marker)

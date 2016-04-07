@@ -15,22 +15,31 @@
         (Integer/parseInt (random-move))))))
 
 (describe "Minimax Ai"
-  ; (desbribe "calculate points"
-  ;   (it "returns ")
-  ; )
-  (describe "minimax-move"
-    (it "returns blocking move if no win is possible"
-      (should= 2
-        (minimax-move ["X" "X" "" "" "" "" "" "" "O"] "O" "X")))
-
+  (describe "calculate points"
     (it "returns 0 for boards where no winner"
       (should= 0
         (score ["X" "X" "O" "O" "O" "X" "X" "X" "O"] "O" "X")
       )
     )
-    (it "returns win rather than block when possible"
+  )
+  (describe "minimax-move"
+    (it "returns blocking move if no win is possible X on top"
+      (should= 2
+        (minimax-move ["X" "X" "" "" "" "" "" "" "O"] "O" "X")))
+
+    (it "returns blocking move if no win is possible O on top"
+      (should= 6
+        (minimax-move ["O" "" "" "" "" "" "" "X" "X"] "O" "X")))
+
+    (it "returns win rather than block when possible X on top"
       (should= 6
         (minimax-move ["X" "X" "" "" "" "" "" "O" "O"] "O" "X")
+      )
+    )
+
+    (it "returns win rather than block when possible O on top"
+      (should= 1
+        (minimax-move ["O" "" "O" "" "" "" "X" "" "X"] "O" "X")
       )
     )
   )

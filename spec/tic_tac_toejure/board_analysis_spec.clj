@@ -30,7 +30,8 @@
 
   (it "returns false if condititon not satisfied"
     (should= false
-      (check-this-win-condition [0 1 2] [0 1 3 4 5]))))
+      (check-this-win-condition [0 1 2] [0 1 3 4 5])))
+)
 
 (describe "get-winner"
   (it "returns winner's marker"
