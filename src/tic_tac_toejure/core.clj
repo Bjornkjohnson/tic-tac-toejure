@@ -12,6 +12,9 @@
 (defn computer-player [strategy]
   {:marker "O" :move-getter strategy :name "Computer Player"})
 
+(defn player [marker strategy name]
+  {:marker marker :move-getter strategy :name name})
+
 (defn as-int [input]
   (Integer/parseInt input))
 
@@ -50,5 +53,5 @@
         (recur next-board (reverse players))))))
 
 (defn -main [& args]
-  (let [players (vector human-player (computer-player minimax-move))]
+  (let [players (vector (player "X" minimax-move "Computer Guy") (player "O" minimax-move "Computer Guy2"))]
     (play build-board players)))

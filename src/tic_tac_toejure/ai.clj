@@ -45,5 +45,8 @@
                                     (get-all-spaces-for board ""))
         moves (get-all-spaces-for board "")
         scored-moves (zipmap moves scores)]
-        (first (first (sort-by val < scored-moves)))))
+        ( if (= own-marker "X")
+          (first (first (sort-by val > scored-moves)))
+          (first (first (sort-by val < scored-moves))))
+        ))
 

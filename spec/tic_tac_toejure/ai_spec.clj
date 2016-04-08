@@ -107,5 +107,65 @@
                         "" "" "X"] "O" "X")
       )
     )
+
+    (it "9 returns "
+      (should= 2
+        (minimax-move [ "O" "O" ""
+                        "" "" ""
+                        "" "" "X"] "X" "O")))
+
+    (it "10 returns "
+      (should= 6
+        (minimax-move [ "X" "" ""
+                        "" "" ""
+                        "" "O" "O"] "X" "O")))
+
+    (it "11 returns "
+      (should= 6
+        (minimax-move [ "O" "O" ""
+                        "" "" ""
+                        "" "X" "X"] "X" "O")
+      )
+    )
+
+    (it "12 returns"
+      (should= 1
+        (minimax-move [ "X" "" "X"
+                        "" "" ""
+                        "O" "" "O"] "X" "O")
+      )
+    )
+
+    (it "13 returns"
+      (should= 8
+        (minimax-move [ "O" "X" "X"
+                        "" "O" ""
+                        "" "" ""] "X" "O")
+      )
+    )
+
+    (it "14 returns"
+      (should= 6
+        (minimax-move [ "X" "X" "O"
+                        "" "O" ""
+                        "" "" ""] "X" "O")
+      )
+    )
+
+    (it "15 returns"
+      (should= 6
+        (minimax-move [ "X" "" "O"
+                        "" "O" ""
+                        "" "" ""] "X" "O")
+      )
+    )
+
+    (it "16 returns"
+      (should= 0
+        (minimax-move [ "" "" ""
+                        "" "O" "X"
+                        "" "" "O"] "X" "O")
+      )
+    )
   )
 )
