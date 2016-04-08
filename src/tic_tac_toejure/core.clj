@@ -32,19 +32,21 @@
       (as-int move)
       (recur board move-getter (move-getter)))))
 
-(defn take-turn [board player]
-  (let [move
-    (if(= (player :marker) "X")
-        (get-valid-move board (player :move-getter) )
-        ( (player :move-getter) board "O" "X" ) )]
-    (place-marker board move (player :marker))))
+(defn take-turn [board players]
+  (let [current-player (first players)
+        next-player (second players)
+        move
+        (if(= (current-player :move-getter) get-player-move)
+            (get-valid-move board (current-player :move-getter) )
+            ( (current-player :move-getter) board (current-player :marker) (next-player :marker) ) )]
+        (place-marker board move (current-player :marker))))
 
 (defn play [board players]
   (print-board board)
   (let [game-state (analyze-game-state board (map :marker players))]
     (if (game-state :game-over)
       (announce-game-over (game-state :winner))
-      (let [next-board (take-turn board (first players))]
+      (let [next-board (take-turn board players)]
         (recur next-board (reverse players))))))
 
 (defn -main [& args]
