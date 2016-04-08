@@ -8,30 +8,44 @@
 (defn random-move []
   (str (rand-int 9)))
 
-(defn calculate-points [winning-marker own-marker]
-  (if (= winning-marker own-marker) 10 -10))
+(defn calculate-points-x [winning-marker depth]
+  (if (= winning-marker "X")
+    (- 10 depth)
+    (+ -10 depth)))
 
-(defn score [board own-marker opponent-marker]
+
+(defn calculate-points-o [winning-marker depth]
+  (if (= winning-marker "O")
+    (+ -10 depth)
+    (- 10 depth)))
+
+(defn calculate-points [winning-marker own-marker depth]
+  (if (= "O" own-marker)
+    (calculate-points-o winning-marker depth)
+    (calculate-points-x winning-marker depth)))
+
+(defn score [board own-marker opponent-marker depth]
   (if (game-over? board (vector own-marker opponent-marker))
       (let [winning-marker (get-winner board (vector own-marker opponent-marker))]
         (if (false? winning-marker)
           0
-          (calculate-points winning-marker own-marker)))
-      (let [values (map #(score (place-marker board % own-marker)opponent-marker own-marker)
-                        (get-all-spaces-for board ""))]
-                        (apply max values))))
+          (calculate-points winning-marker own-marker depth)))
+      (let [new-depth (inc depth)
+            scores (map #(score (place-marker board % own-marker) opponent-marker own-marker new-depth)
+                        (get-all-spaces-for board ""))
+            moves (get-all-spaces-for board "")
+            scored-moves (zipmap moves scores)]
+                        ; (println scored-moves)
+                        (if (= own-marker "X")
+                          (apply max scores)
+                          (apply min scores))
+                        )))
 
 (defn minimax-move [board own-marker opponent-marker]
-  (let [scores (map #(score (place-marker board % own-marker) own-marker opponent-marker)
+  (let [scores (map #(score (place-marker board % own-marker) opponent-marker own-marker  1)
                                     (get-all-spaces-for board ""))
         moves (get-all-spaces-for board "")
         scored-moves (zipmap moves scores)]
         (println scored-moves)
-        (first (first (sort-by val > scored-moves)))))
-  ; (if (game-over? board (vector own-marker opponent-marker))
-  ;   (score board own-marker opponent-marker)
-  ;   (let [empty-positions (get-all-spaces-for board "")]
-  ;     (into {} (for [position empty-positions
-  ;                   :let [new-board (place-marker board position own-marker)
-  ;                         new-scores (hash-map position (minimax-move new-board opponent-marker own-marker))]]
-  ;                         new-scores)))))
+        (first (first (sort-by val < scored-moves)))))
+

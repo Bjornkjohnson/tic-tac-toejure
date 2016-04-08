@@ -18,28 +18,93 @@
   (describe "calculate points"
     (it "returns 0 for boards where no winner"
       (should= 0
-        (score ["X" "X" "O" "O" "O" "X" "X" "X" "O"] "O" "X")
+        (score ["X" "X" "O" "O" "O" "X" "X" "X" "O"] "O" "X" 1)
+      )
+    )
+  )
+  (describe "calculate points"
+    (it "returns -9 if x's turn and x wins"
+      (should= 9
+        (calculate-points-x "X" 1)
+      )
+    )
+
+    (it "returns 10 if x's turn and x loses"
+      (should= -9
+        (calculate-points-x "O" 1)
+      )
+    )
+
+    (it "returns 10 if o's turn and o wins"
+      (should= -9
+        (calculate-points-o "O" 1)
+      )
+    )
+
+    (it "returns -10 if o's turn and o loses"
+      (should= 9
+        (calculate-points-o "X" 1)
       )
     )
   )
   (describe "minimax-move"
-    (it "returns blocking move if no win is possible X on top"
+    (it "1 returns blocking move if no win is possible X on top"
       (should= 2
-        (minimax-move ["X" "X" "" "" "" "" "" "" "O"] "O" "X")))
+        (minimax-move [ "X" "X" ""
+                        "" "" ""
+                        "" "" "O"] "O" "X")))
 
-    (it "returns blocking move if no win is possible O on top"
+    (it "2 returns blocking move if no win is possible O on top"
       (should= 6
-        (minimax-move ["O" "" "" "" "" "" "" "X" "X"] "O" "X")))
+        (minimax-move [ "O" "" ""
+                        "" "" ""
+                        "" "X" "X"] "O" "X")))
 
-    (it "returns win rather than block when possible X on top"
+    (it "3 returns win rather than block when possible X on top"
       (should= 6
-        (minimax-move ["X" "X" "" "" "" "" "" "O" "O"] "O" "X")
+        (minimax-move [ "X" "X" ""
+                        "" "" ""
+                        "" "O" "O"] "O" "X")
       )
     )
 
-    (it "returns win rather than block when possible O on top"
+    (it "4 returns win rather than block when possible O on top"
       (should= 1
-        (minimax-move ["O" "" "O" "" "" "" "X" "" "X"] "O" "X")
+        (minimax-move [ "O" "" "O"
+                        "" "" ""
+                        "X" "" "X"] "O" "X")
+      )
+    )
+
+    (it "5 returns blocking move if no win is possible"
+      (should= 8
+        (minimax-move [ "X" "O" "O"
+                        "" "X" ""
+                        "" "" ""] "O" "X")
+      )
+    )
+
+    (it "6 returns blocking move if no win is possible"
+      (should= 6
+        (minimax-move [ "O" "O" "X"
+                        "" "X" ""
+                        "" "" ""] "O" "X")
+      )
+    )
+
+    (it "7 returns blocking move if no win is possible"
+      (should= 6
+        (minimax-move [ "O" "" "X"
+                        "" "X" ""
+                        "" "" ""] "O" "X")
+      )
+    )
+
+    (it "8 returns blocking move if no win is possible"
+      (should= 0
+        (minimax-move [ "" "" ""
+                        "" "X" "O"
+                        "" "" "X"] "O" "X")
       )
     )
   )
