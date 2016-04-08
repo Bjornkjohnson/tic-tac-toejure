@@ -33,7 +33,10 @@
       (recur board move-getter (move-getter)))))
 
 (defn take-turn [board player]
-  (let [move (get-valid-move board (player :move-getter))]
+  (let [move
+    (if(= (player :marker) "X")
+        (get-valid-move board (player :move-getter) )
+        ( (player :move-getter) board "O" "X" ) )]
     (place-marker board move (player :marker))))
 
 (defn play [board players]
@@ -45,5 +48,5 @@
         (recur next-board (reverse players))))))
 
 (defn -main [& args]
-  (let [players (vector human-player (computer-player random-move))]
+  (let [players (vector human-player (computer-player minimax-move))]
     (play build-board players)))

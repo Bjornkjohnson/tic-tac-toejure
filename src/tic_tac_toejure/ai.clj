@@ -35,7 +35,6 @@
                         (get-all-spaces-for board ""))
             moves (get-all-spaces-for board "")
             scored-moves (zipmap moves scores)]
-                        ; (println scored-moves)
                         (if (= own-marker "X")
                           (apply max scores)
                           (apply min scores))
@@ -46,6 +45,5 @@
                                     (get-all-spaces-for board ""))
         moves (get-all-spaces-for board "")
         scored-moves (zipmap moves scores)]
-        (println scored-moves)
         (first (first (sort-by val < scored-moves)))))
 
