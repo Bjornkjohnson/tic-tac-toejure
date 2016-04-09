@@ -16,9 +16,21 @@
 
 (describe "Minimax Ai"
   (describe "calculate points"
-    (it "returns 0 for boards where no winner"
+    (it "returns 0 for tie board"
       (should= 0
-        (score ["X" "X" "O" "O" "O" "X" "X" "X" "O"] "O" "X" 1)
+        (calculate-points ["X" "X" "O" "O" "O" "X" "X" "X" "O"] "O" "X" 1)
+      )
+    )
+
+    (it "returns 9 for boards where X is the winner and depth is 1"
+      (should= 9
+        (calculate-points ["X" "X" "X" "O" "O" "X" "X" "X" "O"] "O" "X" 1)
+      )
+    )
+
+    (it "returns -9 for boards where O is the winner and depth is 1"
+      (should= -9
+        (calculate-points ["X" "X" "O" "O" "O" "O" "X" "X" "O"] "O" "X" 1)
       )
     )
   )
@@ -108,19 +120,19 @@
       )
     )
 
-    (it "9 returns "
+    (it "9 returns blocking move"
       (should= 2
         (minimax-move [ "O" "O" ""
                         "" "" ""
                         "" "" "X"] "X" "O")))
 
-    (it "10 returns "
+    (it "10 returns blocking move"
       (should= 6
         (minimax-move [ "X" "" ""
                         "" "" ""
                         "" "O" "O"] "X" "O")))
 
-    (it "11 returns "
+    (it "11 returns winning move"
       (should= 6
         (minimax-move [ "O" "O" ""
                         "" "" ""
@@ -128,7 +140,7 @@
       )
     )
 
-    (it "12 returns"
+    (it "12 returns winning move"
       (should= 1
         (minimax-move [ "X" "" "X"
                         "" "" ""
@@ -136,7 +148,7 @@
       )
     )
 
-    (it "13 returns"
+    (it "13 returns blocking move"
       (should= 8
         (minimax-move [ "O" "X" "X"
                         "" "O" ""
@@ -144,7 +156,7 @@
       )
     )
 
-    (it "14 returns"
+    (it "14 returns blocking move"
       (should= 6
         (minimax-move [ "X" "X" "O"
                         "" "O" ""
@@ -152,7 +164,7 @@
       )
     )
 
-    (it "15 returns"
+    (it "15 returns blocking move"
       (should= 6
         (minimax-move [ "X" "" "O"
                         "" "O" ""
@@ -160,7 +172,7 @@
       )
     )
 
-    (it "16 returns"
+    (it "16 returns blocking move"
       (should= 0
         (minimax-move [ "" "" ""
                         "" "O" "X"
