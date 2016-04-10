@@ -3,11 +3,11 @@
             [tic-tac-toejure.ui :refer :all]
             [tic-tac-toejure.core :refer :all]))
 
-(def empty-board (vec (repeat 9 "")))
+(def empty-board  (vec (repeat 9 "")))
 
 (def empty-row (apply str (repeat 3 empty-space-view)))
 
-(def empty-board-output-str (str (apply str (repeat 3 (str empty-row "\n"))) "\n"))
+(def empty-board-output-str "\033[2J\u001B[H\n:_0_:_1_:_2_\n:_3_:_4_:_5_\n:_6_:_7_:_8_\n")
 
 (describe "Ui"
   (around [it]
@@ -37,8 +37,11 @@
 
   (describe "build-board-view"
     (it "builds board representation for empty board"
-      (should= (repeat 9 ":___")
-        (build-view empty-board))))
+      (should= [":_0_" ":_1_" ":_2_"]
+        (build-view [[0 ""] [1 ""] [2 ""]])
+      )
+    )
+  )
 
   (describe "Game over messaging"
     (it "reports Winner's name if winner"
