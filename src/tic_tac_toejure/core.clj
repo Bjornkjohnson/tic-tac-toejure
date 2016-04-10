@@ -41,7 +41,7 @@
         move
         (if(= (current-player :move-getter) get-player-move)
             (get-valid-move board (current-player :move-getter) )
-            ( (current-player :move-getter) board (current-player :marker) (next-player :marker) ) )]
+            ( (current-player :move-getter) board (current-player :marker) (next-player :marker) ) ) ]
         (place-marker board move (current-player :marker))))
 
 (defn play [board players]
@@ -53,5 +53,5 @@
         (recur next-board (reverse players))))))
 
 (defn -main [& args]
-  (let [players (vector (player "X" minimax-move "Computer Guy") (player "O" minimax-move "Computer Guy2"))]
+  (let [players (vector (player "X" get-player-move "Hugh Man") (player "O" minimax-move "Computer Guy"))]
     (play build-board players)))
