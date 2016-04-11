@@ -35,14 +35,27 @@
       (as-int move)
       (recur board move-getter (move-getter)))))
 
+(defn player-is-human? [player]
+    (= (player :move-getter) get-player-move)
+)
+
+(defn get-human-move [board current-player]
+  (get-valid-move board (current-player :move-getter))
+)
+
+(defn get-computer-move [board current-player next-player]
+  ( (current-player :move-getter) board (current-player :marker) (next-player :marker) )
+)
+
+(defn get-move-from-current-player [board current-player next-player]
+  (if(player-is-human? current-player)
+      (get-human-move board current-player)
+      (get-computer-move board current-player next-player))
+)
+
 (defn take-turn [board players]
-  (let [current-player (first players)
-        next-player (second players)
-        move
-        (if(= (current-player :move-getter) get-player-move)
-            (get-valid-move board (current-player :move-getter) )
-            ( (current-player :move-getter) board (current-player :marker) (next-player :marker) ) ) ]
-        (place-marker board move (current-player :marker))))
+  (let [move (get-move-from-current-player board (first players) (second players))]
+        (place-marker board move ((first players) :marker))))
 
 (defn play [board players]
   (print-board board)

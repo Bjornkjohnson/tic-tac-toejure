@@ -1,9 +1,14 @@
 (ns tic-tac-toejure.core-spec
   (:require [speclj.core :refer :all]
             [tic-tac-toejure.core :refer :all]
+            [tic-tac-toejure.ui :refer :all]
             [tic-tac-toejure.ai :refer :all]))
 
 (def test-players (vector human-player (computer-player random-move)))
+
+(def test-human (player "X" get-player-move "Hugh Man"))
+
+(def test-computer (player "O" minimax-move "Com Putor"))
 
 (describe "place-marker"
   (it "adds marker to space"
@@ -41,6 +46,15 @@
     (it "returns false if position is not on board"
       (should= false
         (is-position-available? build-board "10"))))
+
+  (describe "player-is-human?"
+    (it "returns true if player is human"
+      (should= true
+        (player-is-human? test-human)))
+
+    (it "returns false if player is not human"
+      (should= false
+        (player-is-human? test-computer))))
 
   (describe "input-is-valid?"
 
