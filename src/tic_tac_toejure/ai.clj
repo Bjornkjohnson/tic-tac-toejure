@@ -26,11 +26,18 @@
   (let [winning-marker (get-winner board (vector own-marker opponent-marker))]
     (if (false? winning-marker)
       0
-      (if (= "O" own-marker)
-        (calculate-points-o winning-marker depth)
+      (if (= "X" own-marker)
         (calculate-points-x winning-marker depth)
+        (calculate-points-o winning-marker depth)
       )
     )
+  )
+)
+
+(defn extract-optimal-score [marker scores]
+  (if (= marker "X")
+    (apply max scores)
+    (apply min scores)
   )
 )
 
@@ -40,11 +47,15 @@
     (let [moves (get-all-spaces-for board "")
           scores (map #(score (place-marker board % own-marker)
                       opponent-marker own-marker (inc depth)) moves)]
-                      (if (= own-marker "X")
-                        (apply max scores)
-                        (apply min scores)
-                      )
+          (extract-optimal-score own-marker scores)
     )
+  )
+)
+
+(defn extract-optimal-move [marker scored-moves]
+  ( if (= marker "X")
+    (first (first (sort-by val > scored-moves)))
+    (first (first (sort-by val < scored-moves)))
   )
 )
 
@@ -54,10 +65,7 @@
         scores (map #(score (place-marker board % own-marker)
                       opponent-marker own-marker 1) moves)
         scored-moves (zipmap moves scores)]
-        ( if (= own-marker "X")
-          (first (first (sort-by val > scored-moves)))
-          (first (first (sort-by val < scored-moves)))
-        )
+        (extract-optimal-move own-marker scored-moves)
   )
 )
 

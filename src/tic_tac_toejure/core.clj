@@ -53,5 +53,5 @@
         (recur next-board (reverse players))))))
 
 (defn -main [& args]
-  (let [players (vector (player "X" get-player-move "Hugh Man") (player "O" minimax-move "Computer Guy"))]
+  (let [players (vector (player "X" minimax-move "Hugh Man") (player "O" minimax-move "Computer Guy"))]
     (play build-board players)))
