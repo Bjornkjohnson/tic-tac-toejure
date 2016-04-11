@@ -30,12 +30,7 @@
     (map print-it
       (map build-view
         (partition 3
-          (map-indexed vector board)
-        )
-      )
-    )
-  )
-)
+          (map-indexed vector board))))))
 
 
 (defn announce-game-over [winner]
