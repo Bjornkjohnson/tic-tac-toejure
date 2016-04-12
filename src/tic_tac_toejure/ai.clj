@@ -9,27 +9,16 @@
 (defn random-move []
   (str (rand-int 9)))
 
-(defn calculate-points-x [winning-marker depth]
+(defn determine-points-for-winner [winning-marker depth]
   (if (= winning-marker "X")
     (- 10 depth)
     (+ -10 depth)))
-
-
-(defn calculate-points-o [winning-marker depth]
-  (if (= winning-marker "O")
-    (+ -10 depth)
-    (- 10 depth)
-  )
-)
 
 (defn calculate-points [board own-marker opponent-marker depth]
   (let [winning-marker (get-winner board (vector own-marker opponent-marker))]
     (if (false? winning-marker)
       0
-      (if (= "X" own-marker)
-        (calculate-points-x winning-marker depth)
-        (calculate-points-o winning-marker depth)
-      )
+      (determine-points-for-winner winning-marker depth)
     )
   )
 )

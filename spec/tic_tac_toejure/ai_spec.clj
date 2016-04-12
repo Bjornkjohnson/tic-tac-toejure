@@ -37,25 +37,25 @@
   (describe "calculate points"
     (it "returns -9 if x's turn and x wins"
       (should= 9
-        (calculate-points-x "X" 1)
+        (determine-points-for-winner "X" 1)
       )
     )
 
     (it "returns 10 if x's turn and x loses"
       (should= -9
-        (calculate-points-x "O" 1)
+        (determine-points-for-winner "O" 1)
       )
     )
 
     (it "returns 10 if o's turn and o wins"
       (should= -9
-        (calculate-points-o "O" 1)
+        (determine-points-for-winner "O" 1)
       )
     )
 
     (it "returns -10 if o's turn and o loses"
       (should= 9
-        (calculate-points-o "X" 1)
+        (determine-points-for-winner "X" 1)
       )
     )
   )
