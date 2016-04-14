@@ -1,10 +1,8 @@
 (ns tic-tac-toejure.ai
-  (:require [tic-tac-toejure.board_analysis :refer :all]
+  (:require [tic-tac-toejure.board :refer :all]
+            [tic-tac-toejure.board_analysis :refer :all]
             [tic-tac-toejure.ui :refer :all]))
 
-
-(defn place-marker [board position marker]
-  (assoc board position marker))
 
 (defn random-move []
   (str (rand-int 9)))

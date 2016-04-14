@@ -1,10 +1,8 @@
 (ns tic-tac-toejure.core
   (:require [tic-tac-toejure.ui :refer :all]
             [tic-tac-toejure.ai :refer :all]
+            [tic-tac-toejure.board :refer :all]
             [tic-tac-toejure.board_analysis :refer :all]))
-
-(def build-board
-  (vec (repeat 9 "")))
 
 (def human-player
   {:marker "X" :move-getter get-player-move :name "Human Player"})
@@ -14,18 +12,6 @@
 
 (defn player [marker strategy name]
   {:marker marker :move-getter strategy :name name})
-
-(defn as-int [input]
-  (Integer/parseInt input))
-
-(defn is-valid-position? [user-input]
-  (boolean (re-matches #"[0-8]" user-input)))
-
-(defn is-position-available? [board user-input]
-  (= "" (get board (as-int user-input))))
-
-(defn input-is-valid? [board user-input]
-  (and (is-valid-position? user-input) (is-position-available? board user-input)))
 
 (defn get-valid-move
   ([board move-getter]
