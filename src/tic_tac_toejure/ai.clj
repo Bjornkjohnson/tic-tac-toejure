@@ -51,7 +51,7 @@
 (defn minimax-move [board own-marker opponent-marker]
   (print-it computer-thinking-message)
   (let [moves (get-all-spaces-for board "")
-        scores (map #(score (place-marker board % own-marker)
+        scores (pmap #(score (place-marker board % own-marker)
                       opponent-marker own-marker 1) moves)
         scored-moves (zipmap moves scores)]
         (extract-optimal-move own-marker scored-moves)
