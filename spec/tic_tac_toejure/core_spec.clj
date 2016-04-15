@@ -2,6 +2,7 @@
   (:require [speclj.core :refer :all]
             [tic-tac-toejure.core :refer :all]
             [tic-tac-toejure.ui :refer :all]
+            [tic-tac-toejure.board :refer :all]
             [tic-tac-toejure.ai :refer :all]))
 
 (def test-human (player "X" get-player-move "Hugh Man"))
@@ -35,3 +36,9 @@
       (should= true
         (.contains (with-out-str
           (play board test-players)) "O wins!")))))
+
+(describe "get-valid-move"
+  (it "returns number when input validity check returns true"
+    (with-redefs [input-is-valid? (fn [] true)])
+      (should= 3
+        (get-valid-move build-board (fn [] "3")))))

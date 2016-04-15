@@ -1,6 +1,5 @@
 (ns tic-tac-toejure.board-spec
   (:require [speclj.core :refer :all]
-            [tic-tac-toejure.core :refer :all]
             [tic-tac-toejure.board :refer :all]))
 
 
@@ -67,8 +66,4 @@
           (should= false
             (input-is-valid? build-board "valid index like 0 but for a full board")))))))
 
-(describe "get-valid-move"
-  (it "returns number when input validity check returns true"
-    (with-redefs [input-is-valid? (fn [] true)])
-      (should= 3
-        (get-valid-move build-board (fn [] "3")))))
+

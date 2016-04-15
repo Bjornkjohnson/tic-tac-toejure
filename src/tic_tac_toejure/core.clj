@@ -7,13 +7,11 @@
 (defn player [marker strategy name]
   {:marker marker :move-getter strategy :name name})
 
-(defn get-valid-move
-  ([board move-getter]
-    (get-valid-move board move-getter (move-getter)))
-  ([board move-getter move]
+(defn get-valid-move[board move-getter]
+  (let [move (move-getter)]
     (if (input-is-valid? board move)
       (as-int move)
-      (recur board move-getter (move-getter)))))
+      (recur board move-getter))))
 
 (defn player-is-human? [player]
     (= (player :move-getter) get-player-move)
@@ -46,7 +44,7 @@
         (recur next-board (reverse players))))))
 
 (defn -main [& args]
-  (let [players (vector (player "X" minimax-move "Hugh Man") (player "O" minimax-move "Computer Guy"))]
+  (let [players (vector (player "X" get-player-move "Hugh Man") (player "O" minimax-move "Computer Guy"))]
     (play build-board players)
     (shutdown-agents)))
 
