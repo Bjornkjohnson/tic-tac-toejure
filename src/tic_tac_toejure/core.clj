@@ -4,12 +4,6 @@
             [tic-tac-toejure.board :refer :all]
             [tic-tac-toejure.board_analysis :refer :all]))
 
-(def human-player
-  {:marker "X" :move-getter get-player-move :name "Human Player"})
-
-(defn computer-player [strategy]
-  {:marker "O" :move-getter strategy :name "Computer Player"})
-
 (defn player [marker strategy name]
   {:marker marker :move-getter strategy :name name})
 

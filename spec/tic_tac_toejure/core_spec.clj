@@ -4,11 +4,11 @@
             [tic-tac-toejure.ui :refer :all]
             [tic-tac-toejure.ai :refer :all]))
 
-(def test-players (vector human-player (computer-player random-move)))
-
 (def test-human (player "X" get-player-move "Hugh Man"))
 
 (def test-computer (player "O" minimax-move "Com Putor"))
+
+(def test-players (vector test-human test-computer))
 
 (describe "player-is-human?"
   (it "returns true if player is human"
