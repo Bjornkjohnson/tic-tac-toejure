@@ -1,35 +1,22 @@
 (ns tic-tac-toejure.ai
-  (:require [tic-tac-toejure.board_analysis :refer :all]
+  (:require [tic-tac-toejure.board :refer :all]
+            [tic-tac-toejure.board_analysis :refer :all]
             [tic-tac-toejure.ui :refer :all]))
 
-
-(defn place-marker [board position marker]
-  (assoc board position marker))
 
 (defn random-move []
   (str (rand-int 9)))
 
-(defn calculate-points-x [winning-marker depth]
+(defn determine-points-for-winner [winning-marker depth]
   (if (= winning-marker "X")
     (- 10 depth)
     (+ -10 depth)))
-
-
-(defn calculate-points-o [winning-marker depth]
-  (if (= winning-marker "O")
-    (+ -10 depth)
-    (- 10 depth)
-  )
-)
 
 (defn calculate-points [board own-marker opponent-marker depth]
   (let [winning-marker (get-winner board (vector own-marker opponent-marker))]
     (if (false? winning-marker)
       0
-      (if (= "X" own-marker)
-        (calculate-points-x winning-marker depth)
-        (calculate-points-o winning-marker depth)
-      )
+      (determine-points-for-winner winning-marker depth)
     )
   )
 )
@@ -62,7 +49,7 @@
 (defn minimax-move [board own-marker opponent-marker]
   (print-it computer-thinking-message)
   (let [moves (get-all-spaces-for board "")
-        scores (map #(score (place-marker board % own-marker)
+        scores (pmap #(score (place-marker board % own-marker)
                       opponent-marker own-marker 1) moves)
         scored-moves (zipmap moves scores)]
         (extract-optimal-move own-marker scored-moves)
